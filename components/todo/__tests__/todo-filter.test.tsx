@@ -71,4 +71,22 @@ describe("TodoApp 필터링", () => {
     expect(screen.getByText("할 일이 없습니다")).toBeInTheDocument();
     expect(screen.queryByText("할 일을 추가해보세요")).not.toBeInTheDocument();
   });
+
+  it("'완료' 필터 중 항목을 미완료로 토글하면 목록에서 사라진다", async () => {
+    const user = userEvent.setup();
+    render(<TodoApp />);
+
+    await seedFiveTodos(user);
+
+    await user.click(screen.getByRole("button", { name: "완료" }));
+    expect(screen.getAllByRole("listitem")).toHaveLength(2);
+    expect(screen.getByText("A")).toBeInTheDocument();
+
+    const targetLi = screen.getByText("A").closest("li") as HTMLElement;
+    const checkbox = targetLi.querySelector("[role=checkbox]") as HTMLElement;
+    await user.click(checkbox);
+
+    expect(screen.queryByText("A")).not.toBeInTheDocument();
+    expect(screen.getAllByRole("listitem")).toHaveLength(1);
+  });
 });
