@@ -45,4 +45,20 @@ describe("TodoApp 필터링", () => {
       expect(checkbox).not.toBeChecked();
     }
   });
+
+  it("'완료' 필터를 선택하면 완료 항목 2개만 표시된다", async () => {
+    const user = userEvent.setup();
+    render(<TodoApp />);
+
+    await seedFiveTodos(user);
+
+    await user.click(screen.getByRole("button", { name: "완료" }));
+
+    const items = screen.getAllByRole("listitem");
+    expect(items).toHaveLength(2);
+    for (const li of items) {
+      const checkbox = li.querySelector("[role=checkbox]") as HTMLElement;
+      expect(checkbox).toBeChecked();
+    }
+  });
 });

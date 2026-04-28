@@ -11,6 +11,7 @@ type Props = {
 const OPTIONS: { value: Filter; label: string }[] = [
   { value: "all", label: "전체" },
   { value: "active", label: "진행중" },
+  { value: "completed", label: "완료" },
 ];
 
 export function TodoFilter({ value: _value, onChange }: Props) {
