@@ -61,4 +61,14 @@ describe("TodoApp 필터링", () => {
       expect(checkbox).toBeChecked();
     }
   });
+
+  it("Todo 가 0개일 때 '진행중' 필터 선택 시 '할 일이 없습니다' 메시지가 표시된다", async () => {
+    const user = userEvent.setup();
+    render(<TodoApp />);
+
+    await user.click(screen.getByRole("button", { name: "진행중" }));
+
+    expect(screen.getByText("할 일이 없습니다")).toBeInTheDocument();
+    expect(screen.queryByText("할 일을 추가해보세요")).not.toBeInTheDocument();
+  });
 });

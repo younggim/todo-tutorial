@@ -7,6 +7,7 @@ type Props = {
   onToggle: (id: string) => void;
   onRemove: (id: string) => void;
   onUpdate: (id: string, text: string) => void;
+  emptyMessage?: string;
 };
 
 export function TodoList({
@@ -15,13 +16,14 @@ export function TodoList({
   onToggle,
   onRemove,
   onUpdate,
+  emptyMessage = "할 일을 추가해보세요",
 }: Props) {
   if (!hydrated) return null;
 
   if (todos.length === 0) {
     return (
       <p className="text-muted-foreground py-10 text-center text-sm">
-        할 일을 추가해보세요
+        {emptyMessage}
       </p>
     );
   }

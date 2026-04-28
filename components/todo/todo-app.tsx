@@ -14,6 +14,8 @@ export function TodoApp() {
   const [filter, setFilter] = useState<Filter>("all");
 
   const visibleTodos = filterTodos(todos, filter);
+  const emptyMessage =
+    filter === "all" ? "할 일을 추가해보세요" : "할 일이 없습니다";
 
   return (
     <div className="mx-auto w-full max-w-lg space-y-4">
@@ -25,6 +27,7 @@ export function TodoApp() {
         onToggle={toggleTodo}
         onRemove={removeTodo}
         onUpdate={updateTodoText}
+        emptyMessage={emptyMessage}
       />
     </div>
   );
