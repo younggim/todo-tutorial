@@ -29,4 +29,20 @@ describe("TodoApp 필터링", () => {
 
     expect(screen.getAllByRole("listitem")).toHaveLength(5);
   });
+
+  it("'진행중' 필터를 선택하면 미완료 항목 3개만 표시된다", async () => {
+    const user = userEvent.setup();
+    render(<TodoApp />);
+
+    await seedFiveTodos(user);
+
+    await user.click(screen.getByRole("button", { name: "진행중" }));
+
+    const items = screen.getAllByRole("listitem");
+    expect(items).toHaveLength(3);
+    for (const li of items) {
+      const checkbox = li.querySelector("[role=checkbox]") as HTMLElement;
+      expect(checkbox).not.toBeChecked();
+    }
+  });
 });

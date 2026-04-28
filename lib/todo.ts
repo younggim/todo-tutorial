@@ -5,7 +5,7 @@ export type Todo = {
   createdAt: number;
 };
 
-export type Filter = "all";
+export type Filter = "all" | "active";
 
 export function createTodo(text: string): Todo {
   return {
@@ -16,6 +16,7 @@ export function createTodo(text: string): Todo {
   };
 }
 
-export function filterTodos(todos: Todo[], _filter: Filter): Todo[] {
+export function filterTodos(todos: Todo[], filter: Filter): Todo[] {
+  if (filter === "active") return todos.filter((t) => !t.completed);
   return todos;
 }
